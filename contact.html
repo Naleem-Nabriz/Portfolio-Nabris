@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact - Nabris Portfolio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      overflow-x: hidden;
+      background: linear-gradient(135deg, #081630, #051022, #000000);
+      color: #E0F2FF;
+    }
+
+    /* Navigation */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 20px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: rgba(8, 22, 48, 0.98);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      border-bottom: 1px solid rgba(74, 144, 226, 0.2);
+    }
+
+    .nav-logo {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #E0F2FF;
+      text-decoration: none;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-logo span {
+      color: #4A90E2;
+      font-weight: 700;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+    }
+
+    .nav-link {
+      color: #E0F2FF;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1rem;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+      position: relative;
+      padding: 5px 0;
+    }
+
+    .nav-link:hover {
+      color: #4A90E2;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: #4A90E2;
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .nav-link.active {
+      color: #4A90E2;
+    }
+
+    .nav-link.active::after {
+      width: 100%;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: #E0F2FF;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    /* Mobile Menu */
+    .mobile-menu {
+      position: fixed;
+      top: 80px;
+      left: 0;
+      width: 100%;
+      background-color: rgba(8, 22, 48, 0.98);
+      backdrop-filter: blur(10px);
+      padding: 20px 5%;
+      display: none;
+      flex-direction: column;
+      gap: 20px;
+      z-index: 999;
+      border-bottom: 1px solid rgba(74, 144, 226, 0.2);
+    }
+
+    .mobile-menu.active {
+      display: flex;
+    }
+
+    /* Contact Section */
+    .contact-section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 120px 24px 80px;
+    }
+
+    .contact-title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 4rem;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: #4A90E2;
+      text-shadow: 0 2px 8px rgba(74, 144, 226, 0.9);
+    }
+
+    .contact-container {
+      max-width: 1200px;
+      width: 100%;
+      display: flex;
+      gap: 2rem;
+    }
+
+    /* Contact Information */
+    .contact-info {
+      width: 50%;
+      padding: 2rem;
+      background-color: rgba(30, 63, 114, 0.2);
+      border-radius: 1.5rem;
+      box-shadow: 0 0 20px rgba(74, 144, 226, 0.4);
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .info-title {
+      font-size: 1.75rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+
+    .info-card {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      padding: 1.25rem;
+      background-color: rgba(74, 144, 226, 0.1);
+      border-radius: 0.75rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .info-card:hover {
+      background-color: rgba(74, 144, 226, 0.2);
+    }
+
+    .info-icon {
+      font-size: 1.5rem;
+      color: #A0D1FF;
+    }
+
+    .info-label {
+      font-size: 1.125rem;
+      font-weight: 600;
+    }
+
+    .info-value {
+      font-size: 0.875rem;
+      color: #A0D1FF;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1.5rem;
+      font-size: 1.5rem;
+      color: #6a93b5;
+      margin-top: 1rem;
+    }
+
+    .social-link {
+      transition: color 0.3s ease;
+    }
+
+    .social-link:hover {
+      color: #9ba4af;
+    }
+
+    /* Contact Form */
+    .contact-form {
+      width: 50%;
+      padding: 2rem;
+      background-color: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 1.5rem;
+      border: 1px solid rgba(74, 144, 226, 0.4);
+      box-shadow: 0 0 20px rgba(74, 144, 226, 0.2);
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .form-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .form-input {
+      padding: 1.25rem;
+      border-radius: 0.75rem;
+      background-color: transparent;
+      border: 1px solid rgba(74, 144, 226, 0.4);
+      color: #E0F2FF;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-input::placeholder {
+      color: #A0D1FF;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: #4A90E2;
+      box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+    }
+
+    .form-textarea {
+      grid-column: 1 / -1;
+      resize: none;
+      height: 150px;
+    }
+
+    .submit-btn {
+      align-self: flex-start;
+      background: linear-gradient(to right, #4A90E2, #2D5F9E);
+      color: white;
+      font-weight: 800;
+      padding: 1rem 4rem;
+      border-radius: 9999px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .submit-btn:active {
+      transform: translateY(0);
+    }
+
+    /* Footer */
+    .footer {
+      background-color: rgba(8, 22, 48, 0.9);
+      padding: 2rem 5%;
+      text-align: center;
+      border-top: 1px solid rgba(74, 144, 226, 0.2);
+    }
+
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-link {
+      color: #A0D1FF;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-link:hover {
+      color: #4A90E2;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 1.5rem;
+      font-size: 1.25rem;
+      margin-top: 1rem;
+    }
+
+    .footer-social a {
+      color: #A0D1FF;
+      transition: color 0.3s ease;
+    }
+
+    .footer-social a:hover {
+      color: #4A90E2;
+    }
+
+    .copyright {
+      color: #A0D1FF;
+      font-size: 0.875rem;
+      margin-top: 1rem;
+    }
+
+    /* Animations */
+    @keyframes slideUp {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-slideUp {
+      animation: slideUp 0.7s ease forwards;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 15px 20px;
+      }
+      
+      .nav-links {
+        display: none;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .contact-container {
+        flex-direction: column;
+      }
+
+      .contact-info,
+      .contact-form {
+        width: 100%;
+      }
+
+      .contact-title {
+        font-size: 2.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <a href="home.html" class="nav-logo">Naleem <span>Nabris</span></a>
+    <div class="nav-links">
+      <a href="home.html" class="nav-link">Home</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="project.html" class="nav-link">Projects</a>
+      <a href="skills.html" class="nav-link">Skills</a>
+      <a href="#contact" class="nav-link active">Contact</a>
+    </div>
+    <button class="mobile-menu-btn" id="mobileMenuBtn">
+      <i class="fas fa-bars"></i>
+    </button>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="about.html" class="nav-link">About</a>
+    <a href="project.html" class="nav-link">Projects</a>
+    <a href="skills.html" class="nav-link">Skills</a>
+    <a href="#contact" class="nav-link active">Contact</a>
+  </div>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact-section">
+    <h2 class="contact-title">Contact Me</h2>
+
+    <div class="contact-container animate-slideUp">
+      <!-- Contact Information -->
+      <div class="contact-info">
+        <h3 class="info-title">Contact Information</h3>
+
+        <div class="info-card">
+          <i class="fas fa-map-marker-alt info-icon"></i>
+          <div>
+            <p class="info-label">Location</p>
+            <p class="info-value">Colombo, Sri Lanka</p>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <i class="fas fa-envelope info-icon"></i>
+          <div>
+            <p class="info-label">Email</p>
+            <p class="info-value">naleemnabris2002@gmail.com</p>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <i class="fas fa-phone-alt info-icon"></i>
+          <div>
+            <p class="info-label">Phone</p>
+            <p class="info-value">+94 76 867 9150</p>
+          </div>
+        </div>
+
+        <div class="social-links">
+          <a href="https://facebook.com/" class="social-link" target="_blank" aria-label="Facebook">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="https://www.instagram.com/naleem_nabriz/" class="social-link" target="_blank" aria-label="Instagram">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="https://github.com/Naleem-Nabriz" class="social-link" target="_blank" aria-label="GitHub">
+            <i class="fab fa-github"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/Mohammed-Nabris" class="social-link" target="_blank" aria-label="LinkedIn">
+            <i class="fab fa-linkedin"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <form class="contact-form" id="contactForm">
+        <div class="form-grid">
+          <input type="text" name="name" placeholder="Full Name" class="form-input" required>
+          <input type="email" name="email" placeholder="Email Address" class="form-input" required>
+          <input type="tel" name="phone" placeholder="Phone Number (Optional)" class="form-input">
+          <textarea name="message" placeholder="Write your message here..." class="form-input form-textarea" required></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="home.html" class="footer-link">Home</a>
+        <a href="about.html" class="footer-link">About</a>
+        <a href="project.html" class="footer-link">Projects</a>
+        <a href="skills.html" class="footer-link">Skills</a>
+        <a href="#contact" class="footer-link">Contact</a>
+      </div>
+      <div class="footer-social">
+        <a href="https://facebook.com/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.instagram.com/naleem_nabriz/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://github.com/Naleem-Nabriz" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/Mohammed-Nabris" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+      </div>
+      <p class="copyright">© 2025 Naleem Nabris. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('active');
+      // Change icon based on menu state
+      if (mobileMenu.classList.contains('active')) {
+        mobileMenuBtn.innerHTML = '<i class="fas fa-times"></i>';
+      } else {
+        mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+      }
+    });
+
+    // Close mobile menu when a link is clicked
+    const mobileLinks = document.querySelectorAll('.mobile-menu .nav-link');
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+        mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+      });
+    });
+
+    // Form submission
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = this.elements['name'].value;
+      alert(`Thank you, ${name}! Your message has been received.`);
+      this.reset();
+    });
+  </script>
+</body>
+</html>

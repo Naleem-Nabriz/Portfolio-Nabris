@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects - Nabris Portfolio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      overflow-x: hidden;
+      background: linear-gradient(135deg, #081630, #051022, #000000);
+      color: #E0F2FF;
+    }
+
+    /* Navigation */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 20px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: rgba(8, 22, 48, 0.98);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      border-bottom: 1px solid rgba(74, 144, 226, 0.2);
+    }
+
+    .nav-logo {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #E0F2FF;
+      text-decoration: none;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-logo span {
+      color: #4A90E2;
+      font-weight: 700;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+    }
+
+    .nav-link {
+      color: #E0F2FF;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1rem;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+      position: relative;
+      padding: 5px 0;
+    }
+
+    .nav-link:hover {
+      color: #4A90E2;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: #4A90E2;
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .nav-link.active {
+      color: #4A90E2;
+    }
+
+    .nav-link.active::after {
+      width: 100%;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: #E0F2FF;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    /* Mobile Menu */
+    .mobile-menu {
+      position: fixed;
+      top: 80px;
+      left: 0;
+      width: 100%;
+      background-color: rgba(8, 22, 48, 0.98);
+      backdrop-filter: blur(10px);
+      padding: 20px 5%;
+      display: none;
+      flex-direction: column;
+      gap: 20px;
+      z-index: 999;
+      border-bottom: 1px solid rgba(74, 144, 226, 0.2);
+    }
+
+    .mobile-menu.active {
+      display: flex;
+    }
+
+    /* Projects Section */
+    .projects-section {
+      min-height: 100vh;
+      padding: 120px 24px 80px;
+    }
+
+    .section-title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 4rem;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: #4A90E2;
+      text-shadow: 0 2px 8px rgba(74, 144, 226, 0.9);
+      text-align: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .filter-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 3rem;
+      max-width: 1200px;
+      margin: 0 auto 3rem;
+    }
+
+    .filter-btn {
+      padding: 0.5rem 1.5rem;
+      border-radius: 9999px;
+      font-weight: 600;
+      border: 2px solid;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .filter-btn.active {
+      background: linear-gradient(to right, #4A90E2, #2D5F9E);
+      color: white;
+      border-color: transparent;
+      box-shadow: 0 4px 8px rgba(74, 144, 226, 0.4);
+    }
+
+    .filter-btn:not(.active) {
+      background-color: transparent;
+      color: #4A90E2;
+      border-color: #4A90E2;
+    }
+
+    .filter-btn:not(.active):hover {
+      background-color: rgba(74, 144, 226, 0.2);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .project-card {
+      background-color: rgba(30, 63, 114, 0.2);
+      border-radius: 1rem;
+      overflow: hidden;
+      border: 1px solid rgba(74, 144, 226, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(74, 144, 226, 0.2);
+    }
+
+    .project-image-container {
+      position: relative;
+      overflow: hidden;
+      height: 200px;
+    }
+
+    .project-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .project-card:hover .project-image {
+      transform: scale(1.05);
+    }
+
+    .project-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(8, 22, 48, 0.8), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .project-card:hover .project-overlay {
+      opacity: 1;
+    }
+
+    .project-content {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      height: calc(100% - 200px);
+    }
+
+    .project-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #A0D1FF;
+      margin-bottom: 0.75rem;
+    }
+
+    .project-description {
+      color: #A0D1FF;
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
+    }
+
+    .project-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .tech-tag {
+      padding: 0.25rem 0.75rem;
+      background-color: rgba(74, 144, 226, 0.1);
+      color: #d4dee9;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border: 1px solid rgba(74, 144, 226, 0.3);
+    }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #626365;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .project-link:hover {
+      color: #A0D1FF;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 15px 20px;
+      }
+      
+      .nav-links {
+        display: none;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .section-title {
+        font-size: 2.5rem;
+      }
+
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <a href="home.html" class="nav-logo">Naleem <span>Nabris</span></a>
+    <div class="nav-links">
+      <a href="home.html" class="nav-link">Home</a>
+      <a href="about.html" class="nav-link">About</a>
+      <a href="#project" class="nav-link active">Projects</a>
+      <a href="skills.html" class="nav-link">Skills</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </div>
+    <button class="mobile-menu-btn" id="mobileMenuBtn">
+      <i class="fas fa-bars"></i>
+    </button>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="home.html" class="nav-link">Home</a>
+    <a href="about.html" class="nav-link">About</a>
+    <a href="#projects" class="nav-link active">Projects</a>
+    <a href="skills.html" class="nav-link">Skills</a>
+    <a href="contact.html" class="nav-link">Contact</a>
+  </div>
+
+  <!-- Projects Section -->
+  <section id="projects" class="projects-section">
+    <h2 class="section-title">Projects</h2>
+
+    <!-- Filter Buttons -->
+    <div class="filter-buttons">
+      <button class="filter-btn active" onclick="filterProjects('All')">🔄 All</button>
+      <button class="filter-btn" onclick="filterProjects('Web')">💻 Web Projects</button>
+      <button class="filter-btn" onclick="filterProjects('Mobile')">📱 Mobile Apps</button>
+      <button class="filter-btn" onclick="filterProjects('Design')">🎨 Design Prototypes</button>
+    </div>
+
+    <!-- Projects Grid -->
+    <div class="projects-grid" id="projectsGrid">
+      <!-- Projects will be dynamically inserted here by JavaScript -->
+    </div>
+  </section>
+
+  <script>
+    // Project data
+    const projects = [
+      {
+       title: "Cloud Kitchen System",
+        description: "The Cloud Kitchen System is developed using the MERN stack to manage online food orders and kitchen operations efficiently. It streamlines order processing, delivery tracking, and menu management for a smooth customer experience.",
+        image: "images/cloud.png",
+        technologies: ["React.js", "Node.js", "Express.js", "MongoDB"],
+        github: "https://github.com/Naleem-Nabriz/CloudKitchen",
+        category: "Web"
+      },
+      {
+        title: "Online Property Management System",
+        description: "Java-based system for landlords to manage tenants, rents, property listings, and maintenance requests in one platform.",
+        image: "images/land.png",
+        technologies: ["Java", "MySQL", "JDBC"],
+        github: "https://github.com/Naleem-Nabriz/PropertyManagement-OOP",
+        category: "Web"
+      },
+      {
+        title: "Personal Finance Tracker (Mobile)",
+        description: "Helps users manage expenses, income, and savings with charts and categories using Kotlin and SQLite.",
+        image: "images/money.png",
+        technologies: ["Kotlin", "Android Studio", "SQLite"],
+        github: "https://github.com/Naleem-Nabriz/Personal-Finance-Tracker-",
+        category: "Mobile"
+        
+      },
+      {
+        
+        title: "Online Marketing Store System",
+        description: "An Online Marketing Store automates product listings, orders, and customer account management. It handles inventory, sales tracking, payments, and provides notifications and reports to improve marketing and decision-making",
+        image: "images/online.jpg",
+        technologies: ["HTML", "CSS", "PHP", "MySQL"],
+        github: "https://github.com/Naleem-Nabriz/online-marketing-store",
+        category: "Web"
+      },
+      {
+        title: "BLUEWAVE HOTEL",
+        description: "BlueWave Hotel is a welcoming place where guests can enjoy clean rooms, friendly service, and great facilities. Perfect for travelers looking for comfort and convenience during their stay.",
+        image: "images/hotel.png",
+        technologies: ["HTML", "CSS"],
+        github: "https://github.com/Naleem-Nabriz/Blue-Wave-hotel",
+        category: "Web"
+      },
+      {
+        title: "Rent Car App (Figma)",
+        description: "An innovative car rental app prototype crafted in Figma, showcasing a clean design and user-centric features to simplify vehicle selection, booking, and payment processes.",
+        image: "images/car.png",
+        technologies: ["Figma"],
+        github: "https://www.figma.com/proto/LULc4XeUsqgkMulKpi2FPF/Rentcar-App--Community-?node-id=424-249&p=f&t=aFBH3MblFrVvxxUP-0&scaling=scale-down&content-scaling=fixed&page-id=0%3A1",
+        category: "Design"
+      },
+      {
+        title: "9BEATS Music App",
+        description: "A sleek music app that lets users stream, search, and enjoy their favorite songs anytime. Built for smooth listening and a personalized audio experience.",
+        image: "images/music.png",
+        technologies: ["Figma"],
+        github: "https://www.figma.com/proto/WoWvRuuxFCmc4GuWQMIKAn/9Beats---Online-Music-Platform?t=aFBH3MblFrVvxxUP-0&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&node-id=20-148&starting-point-node-id=1%3A2",
+        category: "Design"
+      },
+      {
+        title: "Online Perfume Store",
+        description: "Our website offers a seamless shopping experience for perfume lovers. Explore a curated collection of premium scents with secure checkout and fast delivery.",
+        image: "images/perfume.png",
+        technologies: ["React.js"],
+        github: "https://github.com/Naleem-Nabriz/perfume-Store",
+        category: "Web"
+      }
+    ];
+
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('active');
+      // Change icon based on menu state
+      if (mobileMenu.classList.contains('active')) {
+        mobileMenuBtn.innerHTML = '<i class="fas fa-times"></i>';
+      } else {
+        mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+      }
+    });
+
+    // Close mobile menu when a link is clicked
+    const mobileLinks = document.querySelectorAll('.mobile-menu .nav-link');
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+        mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+      });
+    });
+
+    // Filter projects
+    function filterProjects(category) {
+      // Update active button
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      event.target.classList.add('active');
+
+      // Filter projects
+      const filteredProjects = category === 'All' 
+        ? projects 
+        : projects.filter(proj => proj.category === category);
+
+      // Render projects
+      renderProjects(filteredProjects);
+    }
+
+    // Render projects
+    function renderProjects(projectsToRender) {
+      const projectsGrid = document.getElementById('projectsGrid');
+      projectsGrid.innerHTML = '';
+
+      projectsToRender.forEach(project => {
+        const projectCard = document.createElement('div');
+        projectCard.className = 'project-card';
+        projectCard.innerHTML = `
+          <div class="project-image-container">
+            <img src="${project.image}" alt="${project.title}" class="project-image">
+            <div class="project-overlay"></div>
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">${project.title}</h3>
+            <p class="project-description">${project.description}</p>
+            <div class="project-tech">
+              ${project.technologies.map(tech => 
+                `<span class="tech-tag">${tech}</span>`
+              ).join('')}
+            </div>
+            <a href="${project.github}" target="_blank" class="project-link">
+              <i class="fab fa-github"></i> View on GitHub
+            </a>
+          </div>
+        `;
+        projectsGrid.appendChild(projectCard);
+      });
+    }
+
+    // Initial render
+    renderProjects(projects);
+  </script>
+</body>
+</html>

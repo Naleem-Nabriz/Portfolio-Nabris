@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About - Nabris Portfolio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      overflow-x: hidden;
+      background: linear-gradient(135deg, #081630, #051022, #000000);
+      color: #E0F2FF;
+    }
+
+    /* Navigation */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 20px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: rgba(8, 22, 48, 0.98);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      border-bottom: 1px solid rgba(74, 144, 226, 0.2);
+    }
+
+    .nav-logo {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #E0F2FF;
+      text-decoration: none;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-logo span {
+      color: #4A90E2;
+      font-weight: 700;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+    }
+
+    .nav-link {
+      color: #E0F2FF;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1rem;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+      position: relative;
+      padding: 5px 0;
+    }
+
+    .nav-link:hover {
+      color: #4A90E2;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: #4A90E2;
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .nav-link.active {
+      color: #4A90E2;
+    }
+
+    .nav-link.active::after {
+      width: 100%;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: #E0F2FF;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    /* Mobile Menu */
+    .mobile-menu {
+      position: fixed;
+      top: 80px;
+      left: 0;
+      width: 100%;
+      background-color: rgba(8, 22, 48, 0.98);
+      backdrop-filter: blur(10px);
+      padding: 20px 5%;
+      display: none;
+      flex-direction: column;
+      gap: 20px;
+      z-index: 999;
+      border-bottom: 1px solid rgba(74, 144, 226, 0.2);
+    }
+
+    .mobile-menu.active {
+      display: flex;
+    }
+
+    /* About Section */
+    .about-section {
+      min-height: 100vh;
+      padding: 120px 24px 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .section-title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 4rem;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: #4A90E2;
+      text-shadow: 0 2px 8px rgba(74, 144, 226, 0.9);
+      text-align: center;
+      max-width: 1200px;
+    }
+
+    .about-container {
+      max-width: 1200px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .about-container {
+        grid-template-columns: 1fr 2fr;
+      }
+    }
+
+    /* Left Column */
+    .profile-card {
+      background-color: rgba(30, 63, 114, 0.2);
+      border-radius: 1rem;
+      padding: 2rem;
+      border: 1px solid rgba(74, 144, 226, 0.2);
+      box-shadow: 0 0 20px rgba(74, 144, 226, 0.4);
+    }
+
+    .card-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #4A90E2;
+      margin-bottom: 1.5rem;
+    }
+
+    .profile-text {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #A0D1FF;
+    }
+
+    .languages-card {
+      background-color: rgba(30, 63, 114, 0.2);
+      border-radius: 1rem;
+      padding: 2rem;
+      border: 1px solid rgba(74, 144, 226, 0.2);
+      box-shadow: 0 0 20px rgba(74, 144, 226, 0.4);
+    }
+
+    .language-item {
+      margin-bottom: 1.5rem;
+    }
+
+    .language-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .language-flag {
+      font-size: 1.5rem;
+    }
+
+    .language-name {
+      font-weight: 600;
+    }
+
+    .language-level {
+      font-size: 0.875rem;
+      color: #A0D1FF;
+    }
+
+    .progress-bar {
+      height: 0.5rem;
+      background-color: rgba(74, 144, 226, 0.1);
+      border-radius: 0.25rem;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background-color: #4A90E2;
+      border-radius: 0.25rem;
+    }
+
+    /* Right Column */
+    .tabs-card {
+      background-color: rgba(30, 63, 114, 0.2);
+      border-radius: 1rem;
+      padding: 2rem;
+      border: 1px solid rgba(74, 144, 226, 0.2);
+      box-shadow: 0 0 20px rgba(74, 144, 226, 0.4);
+    }
+
+    .tabs-container {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .tab-button {
+      padding: 0.75rem 1.5rem;
+      border-radius: 9999px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .tab-button.active {
+      background: linear-gradient(to right, #4A90E2, #2D5F9E);
+      color: white;
+      border-color: transparent;
+      box-shadow: 0 4px 8px rgba(74, 144, 226, 0.4);
+    }
+
+    .tab-button:not(.active) {
+      background-color: transparent;
+      color: #4A90E2;
+      border-color: #4A90E2;
+    }
+
+    .tab-button:not(.active):hover {
+      background-color: rgba(74, 144, 226, 0.2);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .timeline-item {
+      display: flex;
+      margin-bottom: 2rem;
+      position: relative;
+      padding-left: 4rem;
+    }
+
+    .timeline-icon {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 3rem;
+      height: 3rem;
+      background-color: #4A90E2;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .timeline-content {
+      flex: 1;
+    }
+
+    .timeline-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #4A90E2;
+      margin-bottom: 0.25rem;
+    }
+
+    .timeline-subtitle {
+      color: #A0D1FF;
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-extra {
+      color: #4A90E2;
+      font-weight: 600;
+      font-size: 0.875rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 15px 20px;
+      }
+      
+      .nav-links {
+        display: none;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .section-title {
+        font-size: 2.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <a href="home.html" class="nav-logo">Naleem <span>Nabris</span></a>
+    <div class="nav-links">
+      <a href="home.html" class="nav-link">Home</a>
+      <a href="#about" class="nav-link active">About</a>
+      <a href="project.html" class="nav-link">Projects</a>
+      <a href="skills.html" class="nav-link">Skills</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </div>
+    <button class="mobile-menu-btn" id="mobileMenuBtn">
+      <i class="fas fa-bars"></i>
+    </button>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="home.html" class="nav-link">Home</a>
+    <a href="#about" class="nav-link active">About</a>
+    <a href="project.html" class="nav-link">Projects</a>
+    <a href="skills.html" class="nav-link">Skills</a>
+    <a href="contact.html" class="nav-link">Contact</a>
+  </div>
+
+  <!-- About Section -->
+  <section id="about" class="about-section">
+    <h2 class="section-title">About Me</h2>
+
+    <div class="about-container">
+      <!-- Left Column -->
+      <div class="left-column">
+        <!-- Profile Card -->
+        <div class="profile-card">
+          <h3 class="card-title">Profile</h3>
+          <p class="profile-text">
+            I'm a third-year Information Technology undergraduate at the Sri Lanka Institute of Information Technology (SLIIT), passionate about building innovative and impactful digital solutions. With solid hands-on experience in full-stack development and mobile app design, I specialize in crafting efficient, user-friendly applications using modern technologies like React, Node.js, PHP, and Kotlin.
+            I love working in collaborative environments, solving real-world problems, and continuously exploring new tools, frameworks, and design patterns. Whether it's web or mobile, frontend or backend, I approach every project with passion, creativity, and a strong growth mindset—always striving to stay ahead in the fast-evolving tech world.
+          </p>
+        </div>
+
+        <!-- Languages Card -->
+        <div class="languages-card">
+          <h3 class="card-title">🌐 Languages</h3>
+          <div class="language-item">
+            <div class="language-header">
+              <span class="language-flag">🇬🇧</span>
+              <div>
+                <p class="language-name">English</p>
+                <p class="language-level">Fluent</p>
+              </div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 90%"></div>
+            </div>
+          </div>
+          <div class="language-item">
+            <div class="language-header">
+              <span class="language-flag">🇱🇰</span>
+              <div>
+                <p class="language-name">Tamil</p>
+                <p class="language-level">Native</p>
+              </div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 100%"></div>
+            </div>
+          </div>
+          <div class="language-item">
+            <div class="language-header">
+              <span class="language-flag">🌀</span>
+              <div>
+                <p class="language-name">Sinhalese</p>
+                <p class="language-level">Intermediate</p>
+              </div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 60%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column -->
+      <div class="right-column">
+        <div class="tabs-card">
+          <!-- Tabs -->
+          <div class="tabs-container">
+            <button class="tab-button active" onclick="showTab('education')">
+              <span>🎓</span> Education
+            </button>
+            <button class="tab-button" onclick="showTab('experience')">
+              <span>💼</span> Experience
+            </button>
+            <button class="tab-button" onclick="showTab('achievements')">
+              <span>🏆</span> Achievements
+            </button>
+          </div>
+
+          <!-- Education Tab -->
+          <div id="education-content" class="tab-content active">
+            <div class="timeline-item">
+              <div class="timeline-icon">🎓</div>
+              <div class="timeline-content">
+                <h4 class="timeline-title">BSc (Hons) in Information Technology</h4>
+                <p class="timeline-subtitle">SLIIT – Sri Lanka Institute of Information Technology</p>
+                <p class="timeline-extra" style="color: white;">📊 GPA: 2.82 | 3rd Year, 1st Semester</p>
+
+
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-icon">📘</div>
+              <div class="timeline-content">
+                <h4 class="timeline-title">GCE Advanced Level Examination – 2021</h4>
+                <p class="timeline-subtitle">Muslim Madhya Maha Vidyalaya</p>
+                <p class="timeline-extra" style="color: white;">🧪 Technology Stream | Passed all subjects in one sitting</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-icon">💻</div>
+              <div class="timeline-content">
+                <h4 class="timeline-title">Computer Application Assistant</h4>
+                <p class="timeline-subtitle">Vocational Training Authority – NVQ Level 3</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-icon">📗</div>
+              <div class="timeline-content">
+                <h4 class="timeline-title">GCE O/L</h4>
+                <p class="timeline-subtitle">✅ Passed all subjects in one sitting</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Experience Tab 
+          <div id="experience-content" class="tab-content">
+            <div class="timeline-item">
+              <div class="timeline-icon">🛠️</div>
+              <div class="timeline-content">
+                <h4 class="timeline-title">Internship at Tech Solutions</h4>
+                <p class="timeline-subtitle">Software Development Intern | Jun 2023 - Aug 2023</p>
+                <p class="timeline-extra">Worked on frontend features using React and improved UI responsiveness.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-icon">💼</div>
+              <div class="timeline-content">
+                <h4 class="timeline-title">Freelance Web Developer</h4>
+                <p class="timeline-subtitle">Jan 2022 - Present</p>
+                <p class="timeline-extra">Design and development of small business websites using React and Tailwind CSS.</p>
+              </div>
+            </div>
+          </div> -->
+
+          <!-- Achievements Tab -->
+          <div id="achievements-content" class="tab-content">
+            <div class="timeline-item">
+              <div class="timeline-icon">🏅</div>
+              <div class="timeline-content">
+                <h4 class="timeline-title">Certificate of Participation – LEADERSTEP 2.0</h4>
+                <p class="timeline-subtitle">Leo Club of SLIIT | Leoistic Year 23/24</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-icon">🏆</div>
+              <div class="timeline-content">
+                <h4 class="timeline-title">Certificate of Leadership Award</h4>
+                <p class="timeline-subtitle">Board of Discipline</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-icon">🧠</div>
+              <div class="timeline-content">
+                <h4 class="timeline-title">Certificate of Participation – Leadership & Personality Development</h4>
+                <p class="timeline-subtitle">All Island Training Programs | Thames College</p>
+              </div>
+            </div>
+            
+            <div class="timeline-item">
+              <div class="timeline-icon">🏐</div>
+              <div class="timeline-content">
+                <h4 class="timeline-title">Netball Champion – Divisional Meet</h4>
+                <p class="timeline-subtitle">National Youth Sports Festival | 2019</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-icon">⚽</div>
+              <div class="timeline-content">
+                <h4 class="timeline-title">Football Champion – Divisional Meet</h4>
+                <p class="timeline-subtitle">National Youth Sports Festival | 2017</p>
+              </div>
+            </div>
+                        
+            <div class="timeline-item">
+             <div class="timeline-icon">🏃‍♂️</div>
+             <div class="timeline-content">
+              <h4 class="timeline-title">2nd Place – 4×100m Relay – Divisional Meet </h4>
+              <p class="timeline-subtitle">National Youth Sports Festival | 2016</p>
+            </div>
+            </div>
+
+
+            <div class="timeline-item">
+              <div class="timeline-icon">🥇</div>
+              <div class="timeline-content">
+                <h4 class="timeline-title">Kabbadi Champion – Eastern Province</h4>
+                <p class="timeline-subtitle">Department of Sports | 2015</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('active');
+      // Change icon based on menu state
+      if (mobileMenu.classList.contains('active')) {
+        mobileMenuBtn.innerHTML = '<i class="fas fa-times"></i>';
+      } else {
+        mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+      }
+    });
+
+    // Close mobile menu when a link is clicked
+    const mobileLinks = document.querySelectorAll('.mobile-menu .nav-link');
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+        mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+      });
+    });
+
+    // Tab functionality
+    function showTab(tabName) {
+      // Hide all tab contents
+      document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.remove('active');
+      });
+      
+      // Show the selected tab content
+      document.getElementById(tabName + '-content').classList.add('active');
+      
+      // Update button styles
+      document.querySelectorAll('.tab-button').forEach(button => {
+        button.classList.remove('active');
+      });
+      
+      event.target.classList.add('active');
+    }
+  </script>
+</body>
+</html>
